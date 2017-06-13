@@ -16,6 +16,10 @@ convert_to_num() {
 	fi
 }
 
+# Start ssh
+#!/bin/bash
+service ssh start
+
 # Start apache2
 service apache2 start
 
