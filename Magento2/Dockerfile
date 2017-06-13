@@ -86,7 +86,8 @@ COPY magento.conf /etc/apache2/sites-available/
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY cronjobs /cronjobs
 COPY phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
-COPY phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
+# Enable httpd conf for phpmyadmin
+RUN ln -s ../conf-available/phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
 COPY phpmyadmin-access /usr/share/phpmyadmin/.htaccess
 COPY redis.php /redis.php
 COPY index.html /var/www/html/index.html
