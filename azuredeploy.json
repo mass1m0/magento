@@ -2,7 +2,7 @@
   "parameters": {
     "dockerRegistryImageName": {
       "type": "string",
-      "defaultValue": "sharpeli/magento:v120"
+      "defaultValue": "morqua/magento2:latest"
     },
     "siteName": {
       "type": "string"

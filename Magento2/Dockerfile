@@ -42,7 +42,7 @@ RUN apt-get update \
 # ------------------------
     && apt-get update \ 
     && apt-get install -y --no-install-recommends openssh-server \
-    && echo "root:Docker!" | chpasswd
+    && echo "root:Docker!" | chpasswd \
 
 # Install phpmyadmin
     && echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections \

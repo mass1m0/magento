@@ -16,10 +16,6 @@ convert_to_num() {
 	fi
 }
 
-# Start ssh
-#!/bin/bash
-service ssh start
-
 # Start apache2
 service apache2 start
 
@@ -31,10 +27,6 @@ service mysql start
 
 # Start cron service
 service cron start
-
-# Start ssh service
-#!/bin/bash
-service ssh start
 
 cd /var/www/magento
 
@@ -125,13 +117,6 @@ if [ ! -f app/etc/env.php ]; then
 		cat /cronjobs >> magentocron
 		crontab magentocron
 		rm magentocron
-
-		if [ "${AZURE_SSH,,}" = "true" ] ; then
-			apt-get update \ 
-  			&& apt-get install -y --no-install-recommends openssh-server \
-  			&& echo "root:Docker!" | chpasswd
-
-		fi
         fi
 fi
 
