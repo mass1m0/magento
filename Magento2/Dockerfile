@@ -6,8 +6,8 @@ ARG PACKAGE_URL=https://raw.githubusercontent.com/Sharpeli/Packages/master/Magen
 # Install build-essential, wget, cron
 RUN apt-get update \
     && apt-get install -y build-essential \
-                       wget \
-		       cron \
+                wget \
+		        cron \
 
 # Install apache2 
     && apt-get update \ 
@@ -16,26 +16,33 @@ RUN apt-get update \
 # Install PHP
     && apt-get -y update \
     && apt-get install -y php7.0 \
-			  libapache2-mod-php7.0 \
-		          php7.0 \
-			  php7.0-common \
-			  php7.0-gd \
-			  php7.0-mysql \
-			  php7.0-mcrypt \
-			  php7.0-curl \
-			  php7.0-intl \
-			  php7.0-xsl \
-			  php7.0-mbstring \
-			  php7.0-zip \
-                          php7.0-bcmath \
-                          php7.0-iconv \
-			  php7.0-gettext \
+			    libapache2-mod-php7.0 \
+		        php7.0 \
+			    php7.0-common \
+			    php7.0-gd \
+			    php7.0-mysql \
+			    php7.0-mcrypt \
+			    php7.0-curl \
+			    php7.0-intl \
+			    php7.0-xsl \
+			    php7.0-mbstring \
+			    php7.0-zip \
+                php7.0-bcmath \
+                php7.0-iconv \
+			    php7.0-gettext \
     && sed -i 's/memory_limit = 128M/memory_limit = 2G/' /etc/php/7.0/apache2/php.ini \
     && sed -i 's/memory_limit = -1/memory_limit = 512M/' /etc/php/7.0/cli/php.ini \
 
 # Install MySQL without interaction
     && DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server \
     && service mysql start \
+
+# ------------------------
+# SSH Server support
+# ------------------------
+    && apt-get update \ 
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd
 
 # Install phpmyadmin
     && echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections \
@@ -74,8 +81,9 @@ RUN apt-get update \
     && chown -R :www-data . \
     && chmod u+x bin/magento
     
+COPY sshd_config /etc/ssh/
 COPY magento.conf /etc/apache2/sites-available/
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /bin/docker-entrypoint.sh
 COPY cronjobs /cronjobs
 COPY phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 COPY phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
@@ -84,8 +92,9 @@ COPY redis.php /redis.php
 COPY index.html /var/www/html/index.html
 
 # Change permissions for docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /bin/docker-entrypoint.sh
 
 EXPOSE 80
+EXPOSE 2222 80
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/docker-entrypoint.sh"]

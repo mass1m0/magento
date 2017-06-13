@@ -16,6 +16,10 @@ convert_to_num() {
 	fi
 }
 
+# Start ssh
+#!/bin/bash
+service ssh start
+
 # Start apache2
 service apache2 start
 
@@ -27,6 +31,10 @@ service mysql start
 
 # Start cron service
 service cron start
+
+# Start ssh service
+#!/bin/bash
+service ssh start
 
 cd /var/www/magento
 
@@ -47,7 +55,7 @@ if [ ! -f app/etc/env.php ]; then
 	set_default 'PHPMYADMIN_PASSWORD' 'MS173m_QN'
 	set_default 'PRODUCTION_MODE' 'false'
 	set_default 'USE_REWRITES' 'true'
-	set_default 'ADMIN_USE_SECURITY_KEY' 'true'    
+	set_default 'ADMIN_USE_SECURITY_KEY' 'true'  
 
         # Configure apache2 and PHP
         a2ensite magento.conf
@@ -117,6 +125,13 @@ if [ ! -f app/etc/env.php ]; then
 		cat /cronjobs >> magentocron
 		crontab magentocron
 		rm magentocron
+
+		if [ "${AZURE_SSH,,}" = "true" ] ; then
+			apt-get update \ 
+  			&& apt-get install -y --no-install-recommends openssh-server \
+  			&& echo "root:Docker!" | chpasswd
+
+		fi
         fi
 fi
 
