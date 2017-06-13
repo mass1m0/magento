@@ -83,7 +83,7 @@ RUN apt-get update \
     
 COPY sshd_config /etc/ssh/
 COPY magento.conf /etc/apache2/sites-available/
-COPY docker-entrypoint.sh /bin/docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/
 COPY cronjobs /cronjobs
 COPY phpmyadmin.conf /etc/apache2/conf-available/phpmyadmin.conf
 COPY phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
@@ -92,9 +92,9 @@ COPY redis.php /redis.php
 COPY index.html /var/www/html/index.html
 
 # Change permissions for docker-entrypoint.sh
-RUN chmod +x /bin/docker-entrypoint.sh
+RUN chmod +x  /usr/local/bin/docker-entrypoint.sh
 
 EXPOSE 80
 EXPOSE 2222 80
 
-ENTRYPOINT ["/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
