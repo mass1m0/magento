@@ -32,6 +32,15 @@ service mysql start
 # Start cron service
 service cron start
 
+# Install composer if installer.php exists
+if [  -f /tmp/installer.php ]; then
+
+    php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer \
+    rm /tmp/installer.php \
+    composer --ansi --version --no-interaction
+
+fi
+
 cd /var/www/magento
 
 # The file env.php doesn't exitst means that magento hasn't been installed yet
