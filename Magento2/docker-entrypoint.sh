@@ -16,6 +16,21 @@ convert_to_num() {
 	fi
 }
 
+# Enable httpd new conf for phpmyadmin
+if [ -f /etc/apache2/conf-enabled/phpmyadmin.conf ] ; then
+    rm /etc/apache2/conf-enabled/phpmyadmin.conf
+fi
+a2ensite phpmyadmin.conf
+
+# Install composer if installer.php exists
+if [  -f /tmp/installer.php ]; then
+
+    php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer \
+    rm /tmp/installer.php \
+    composer --ansi --version --no-interaction
+
+fi
+
 # Start ssh
 #!/bin/bash
 service ssh start
@@ -31,15 +46,6 @@ service mysql start
 
 # Start cron service
 service cron start
-
-# Install composer if installer.php exists
-if [  -f /tmp/installer.php ]; then
-
-    php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer \
-    rm /tmp/installer.php \
-    composer --ansi --version --no-interaction
-
-fi
 
 cd /var/www/magento
 
