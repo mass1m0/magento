@@ -17,13 +17,14 @@ convert_to_num() {
 }
 
 # Enable httpd new conf for phpmyadmin
-if [ -f /etc/apache2/conf-enabled/phpmyadmin.conf ] ; then
+if [ -f /etc/apache2/conf-enabled/phpmyadmin.conf ]; then
     rm /etc/apache2/conf-enabled/phpmyadmin.conf
 fi
+
 a2ensite phpmyadmin.conf
 
 # Install composer if installer.php exists
-if [  -f /tmp/installer.php ]; then
+if [ -f /tmp/installer.php ]; then
 
     php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer \
     rm /tmp/installer.php \
