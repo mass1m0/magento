@@ -51,4 +51,4 @@ $cache = array(
 );
 $origin['session'] = $session;
 $origin['cache'] = $cache;
-file_put_contents('/env-tmp.php', var_export($origin,true));
+file_put_contents('/env-tmp.php', var_export($origin, true));

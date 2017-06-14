@@ -7,7 +7,8 @@ ARG PACKAGE_URL=https://raw.githubusercontent.com/Sharpeli/Packages/master/Magen
 RUN apt-get update \
     && apt-get install -y build-essential \
                 wget \
-		        cron \
+                cron \
+                curl \
 
 # Install apache2 
     && apt-get update \ 
@@ -16,22 +17,22 @@ RUN apt-get update \
 # Install PHP
     && apt-get -y update \
     && apt-get install -y php7.0 \
-			    libapache2-mod-php7.0 \
-		        php7.0 \
-			    php7.0-common \
-			    php7.0-gd \
-			    php7.0-mysql \
-			    php7.0-mcrypt \
-			    php7.0-curl \
-			    php7.0-intl \
-			    php7.0-xsl \
-			    php7.0-mbstring \
-			    php7.0-zip \
+                libapache2-mod-php7.0 \
+                php7.0 \
+                php7.0-common \
+                php7.0-gd \
+                php7.0-mysql \
+                php7.0-mcrypt \
+                php7.0-curl \
+                php7.0-intl \
+                php7.0-xsl \
+                php7.0-mbstring \
+                php7.0-zip \
                 php7.0-bcmath \
                 php7.0-iconv \
-			    php7.0-gettext \
-    && sed -i 's/memory_limit = 128M/memory_limit = 2G/' /etc/php/7.0/apache2/php.ini \
-    && sed -i 's/memory_limit = -1/memory_limit = 512M/' /etc/php/7.0/cli/php.ini \
+                php7.0-gettext \
+    && sed -i 's/memory_limit = 128M/memory_limit = 1G/' /etc/php/7.0/apache2/php.ini \
+    && sed -i 's/memory_limit = -1/memory_limit = 1G/' /etc/php/7.0/cli/php.ini \
 
 # Install MySQL without interaction
     && DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server \
