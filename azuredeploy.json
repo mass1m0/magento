@@ -2,7 +2,7 @@
   "parameters": {
     "dockerRegistryImageName": {
       "type": "string",
-      "defaultValue": "morqua/magento2:latest"
+      "defaultValue": "morqua/magento2:ce_2_1_3"
     },
     "siteName": {
       "type": "string"
