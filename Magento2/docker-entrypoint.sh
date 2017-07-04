@@ -20,8 +20,7 @@ convert_to_num() {
 if [ -f /etc/apache2/conf-enabled/phpmyadmin.conf ]; then
     rm /etc/apache2/conf-enabled/phpmyadmin.conf
 fi
-
-a2ensite phpmyadmin.conf
+ln -s /etc/apache2/conf-available/phpmyadmin.conf /etc/apache2/conf-enabled/phpmyadmin.conf
 
 # Install composer if installer.php exists
 if [ -f /tmp/installer.php ]; then
@@ -72,6 +71,7 @@ if [ ! -f app/etc/env.php ]; then
         # Configure apache2 and PHP
         a2ensite magento.conf
         a2dissite 000-default.conf
+        a2enmod ssl
         a2enmod rewrite
         phpenmod mcrypt
         phpenmod mbstring

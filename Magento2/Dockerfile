@@ -91,7 +91,7 @@ RUN apt-get update \
         unlink('/tmp/installer.php'); \
         echo 'Integrity check failed, installer is either corrupt or worse.' . PHP_EOL; \
         exit(1); \
-    }" \
+    }"
     
 COPY sshd_config /etc/ssh/
 COPY magento.conf /etc/apache2/sites-available/
@@ -105,7 +105,6 @@ COPY index.html /var/www/html/index.html
 # Change permissions for docker-entrypoint.sh
 RUN chmod +x  /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE 80
 EXPOSE 2222 80
 
 ENTRYPOINT ["docker-entrypoint.sh"]
