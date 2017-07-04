@@ -105,6 +105,6 @@ COPY index.html /var/www/html/index.html
 # Change permissions for docker-entrypoint.sh
 RUN chmod +x  /usr/local/bin/docker-entrypoint.sh
 
-EXPOSE 2222 80
+EXPOSE 2222 80 433
 
 ENTRYPOINT ["docker-entrypoint.sh"]
